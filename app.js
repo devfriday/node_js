@@ -12,6 +12,7 @@ app.set('view engine', 'pug') ;
 app.get('/', function(req,res){
     //  res.send('Hello World');
       //res.render('index') ;
+      // testing github commit
       res.render('index',{title: 'Articles'});
   });
 
