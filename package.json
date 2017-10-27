@@ -1,0 +1,16 @@
+{
+  "name": "nodekb",
+  "version": "1.0.0",
+  "description": "Simple knoledgebase app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "Sumit Bhattacharya",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {}
+}
