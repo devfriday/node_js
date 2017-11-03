@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path') ;
 // mongo db changes
 const mongoose = require('mongoose') ;
-
+// init DB
 mongoose.connect('mongodb://localhost/nodekb') ;
 db = mongoose.connection;
 
@@ -17,15 +17,17 @@ db.on('error', function(err)
 }
 );
 
+//bring models from model folder just created
+let Article = require('./models/article');
+
 //init App
 const app = express();
-
 //load view engine
 app.set('views', path.join(__dirname,'views')) ;
 app.set('view engine', 'pug') ;
 
-//home route
-app.get('/', function(req,res){
+//home route commented now using Mongo DB
+/*app.get('/', function(req,res){
     let articles = [
       {
         id:1,
@@ -51,6 +53,24 @@ app.get('/', function(req,res){
             articles: articles
     });
   });
+*/
+
+// code for mongo DB
+
+app.get('/', function(req,res){
+  Article.find({}, function(err, articles){
+    if(err){
+      console.log(err)
+    }else{
+      res.render('index',{
+                          title: 'Articles',
+                          articles: articles
+                        });
+    }
+    });
+  });
+
+
 
   app.get('/articles/add', function(req,res){
             res.render('add_articles',{title: 'Add Article'

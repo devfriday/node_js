@@ -1,4 +1,4 @@
-let mongoose = require('nongoose') ;
+let mongoose = require('mongoose') ;
 
 /// article schema
 
@@ -7,11 +7,11 @@ let articleSchema = mongoose.Schema({
     type: String,
     required:true
   },
-  author{
+  author:{
     type: String,
     required:true
   },
-  body{
+  body:{
     type:String,
     required: true
   }
