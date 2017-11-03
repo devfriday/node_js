@@ -42,6 +42,11 @@ app.get('/', function(req,res){
     }
     });
   });
+  
+app.get('/articles/add', function(req,res){
+              res.render('add_articles',{title: 'Add Article'
+        });
+      });
 // POSt action over here
 app.post('/articles/add', function(req,res)
 {   let article = new Article() ;
@@ -65,10 +70,7 @@ app.get('/articles/:id', function(req,res){
     });
   });
 });
-app.get('/articles/add', function(req,res){
-            res.render('add_articles',{title: 'Add Article'
-      });
-    });
+
 
 app.listen(3200, function(){
   console.log('Server strted on port 3200 ...');
