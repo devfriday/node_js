@@ -74,6 +74,16 @@ app.get('/articles/edit/:id', function(req,res){
     });
   });
 });
+
+app.delete('/articles/:id', function(req, res){
+  let query = {_id:req.params.id}
+  Article.remove(query, function(err){
+    if(err){
+      console.log(err);
+    }
+    res.send('Success') ;
+  });
+});
 app.post('/articles/edit/:id', function(req,res)
 {   let article = {};
     article.title = req.body.title;
