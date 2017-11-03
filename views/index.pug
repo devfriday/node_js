@@ -4,5 +4,7 @@ block content
       h1 #{title}
       ul
         each article, i in articles
+          br
           li= article.title
               li= article.author
+                li= article.body
