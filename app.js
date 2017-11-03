@@ -70,6 +70,15 @@ app.get('/', function(req,res){
     });
   });
 
+// POSt action over here
+  app.post('/articles/add', function(req,res)
+{   let article = new Article() ;
+    
+
+    //console.log('Submitted Form');
+    return;
+
+});
 
 
   app.get('/articles/add', function(req,res){
