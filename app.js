@@ -10,11 +10,14 @@ app.set('view engine', 'pug') ;
 
 //home route
 app.get('/', function(req,res){
-    //  res.send('Hello World');
-      //res.render('index') ;
-      // GIT change jvhjkgsdfhgdfglsdfgjkfh
-      res.render('index',{title: 'Articles'});
+          res.render('index',{title: 'Articles'
+    });
   });
+
+  app.get('/articles/add', function(req,res){
+            res.render('add_articles',{title: 'Add Article'
+      });
+    });
 
 app.listen(3200, function(){
   console.log('Server strted on port 3200 ...');
