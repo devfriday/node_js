@@ -29,6 +29,8 @@ app.use(express.static(path.join(__dirname,'public')));
 //load view engine
 app.set('views', path.join(__dirname,'views')) ;
 app.set('view engine', 'pug') ;
+
+
 // code for mongo DB
 app.get('/', function(req,res){
   Article.find({}, function(err, articles){
@@ -42,7 +44,7 @@ app.get('/', function(req,res){
     }
     });
   });
-  
+
 app.get('/articles/add', function(req,res){
               res.render('add_articles',{title: 'Add Article'
         });
@@ -62,7 +64,35 @@ app.post('/articles/add', function(req,res)
       }
     });
 });
-app.get('/articles/:id', function(req,res){
+// load edit form
+app.get('/articles/edit/:id', function(req,res){
+  Article.findById(req.params.id, function(err,article){
+  //  console.log(article) ;
+  res.render('edit_article',{
+    title:'Edit Article',
+    article:article
+    });
+  });
+});
+app.post('/articles/edit/:id', function(req,res)
+{   let article = {};
+    article.title = req.body.title;
+    article.author = req.body.author;
+    article.body = req.body.body;
+
+    let query = {_id:req.params.id}
+    Article.update(query, article, function(err){
+      if(err){
+        console.log(err);
+        return;
+      }else{
+        res.redirect('/') ;
+      }
+    });
+});
+
+
+app.get('/article/:id', function(req,res){
   Article.findById(req.params.id, function(err,article){
   //  console.log(article) ;
   res.render('article',{
@@ -70,6 +100,12 @@ app.get('/articles/:id', function(req,res){
     });
   });
 });
+
+// post edit articles
+
+
+
+
 
 
 app.listen(3200, function(){
