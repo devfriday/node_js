@@ -7,69 +7,29 @@ const bodyParser = require('body-parser') ;
 // init DB
 mongoose.connect('mongodb://localhost/nodekb') ;
 db = mongoose.connection;
-
 //check for DB ERR
-db.once('open', function()
-{
+db.once('open', function(){
   console.log('Connected to MongoDB') ;
 }) ;
-db.on('error', function(err)
-{
+db.on('error', function(err){
   console.log(err) ;
 }
 );
-
 //init App
 const app = express();
-
 //bring models from model folder just created
 let Article = require('./models/article');
 // BODY PARSER MIDDLEWARE
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-
 // parse application/json
 app.use(bodyParser.json())
-
 // set public folder
 app.use(express.static(path.join(__dirname,'public')));
-
-
 //load view engine
 app.set('views', path.join(__dirname,'views')) ;
 app.set('view engine', 'pug') ;
-
-//home route commented now using Mongo DB
-/*app.get('/', function(req,res){
-    let articles = [
-      {
-        id:1,
-        title:'Article One',
-        author:'Auth 1',
-        body: 'This is art 1'
-      },
-      {
-        id:2,
-        title:'Article Two',
-        author:'Auth 2',
-        body: 'This is art 2'
-      },
-      {
-        id:3,
-        title:'Article Three',
-        author:'Auth 3',
-        body: 'This is art 3'
-      }
-    ];
-          res.render('index',{
-            title: 'Articles',
-            articles: articles
-    });
-  });
-*/
-
 // code for mongo DB
-
 app.get('/', function(req,res){
   Article.find({}, function(err, articles){
     if(err){
@@ -82,14 +42,12 @@ app.get('/', function(req,res){
     }
     });
   });
-
 // POSt action over here
-  app.post('/articles/add', function(req,res)
+app.post('/articles/add', function(req,res)
 {   let article = new Article() ;
     article.title = req.body.title;
     article.author = req.body.author;
     article.body = req.body.body;
-
     article.save(function(err){
       if(err){
         console.log(err);
@@ -98,21 +56,20 @@ app.get('/', function(req,res){
         res.redirect('/') ;
       }
     });
-
-
-
-    //console.log('Submitted Form change 5');
-  //  return;
-
 });
-
-
-  app.get('/articles/add', function(req,res){
+app.get('/articles/:id', function(req,res){
+  Article.findById(req.params.id, function(err,article){
+  //  console.log(article) ;
+  res.render('article',{
+    article:article
+    });
+  });
+});
+app.get('/articles/add', function(req,res){
             res.render('add_articles',{title: 'Add Article'
       });
     });
 
 app.listen(3200, function(){
   console.log('Server strted on port 3200 ...');
-
 });
